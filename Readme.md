@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Денис Корниенко](https://up.htmlacademy.ru/javascript/7/user/31353).
-* Наставник: `Неизвестно`.
+* Наставник: `Антон Калин`.
 
 ---
 
