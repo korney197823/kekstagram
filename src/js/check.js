@@ -1,18 +1,17 @@
 'use strict';
 
-function getMessage(a, b) {
+(function getMessage(a, b) {
 
   if(typeof a === 'boolean') {
     if (a) {
       return 'Переданное GIF-изображение анимировано и содержит ' + b + ' кадров';
-    }
-    else {
+    } else {
       return 'Переданное GIF-изображение не анимировано';
     }
   }
 
   if (typeof a === 'number') {
-    return 'Переданное SVG-изображение содержит ' + a + ' объектов и ' + (b * 4) +  ' атрибутов';
+    return 'Переданное SVG-изображение содержит ' + a + ' объектов и ' + (b * 4) + ' атрибутов';
   }
 
   if (Array.isArray(a) && Array.isArray(b)) {
@@ -28,10 +27,8 @@ function getMessage(a, b) {
       return sum + current;
     });
     return 'Количество красных точек во всех строчках изображения: ' + amountOfRedPoints;
-  }
-
-  else {
+  } else {
     return 'Переданы некорректные данные';
   }
 
-}
+}());
