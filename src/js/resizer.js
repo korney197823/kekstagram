@@ -142,6 +142,17 @@
       this._ctx.fill('evenodd');
       this._ctx.closePath();
 
+      //Цвет шрифта для размера изображения
+      this._ctx.fillStyle = '#ffffff';
+      //Размер шрифта
+      this._ctx.font = '20px Arial';
+      //Определяем ширину текста
+      var textWidth = this._ctx.measureText(this._image.naturalWidth + ' x ' + this._image.naturalHeight);
+
+      //Выводим размеры кадрируемого изображения
+      this._ctx.fillText(this._image.naturalWidth + ' x ' + this._image.naturalHeight,
+         -textWidth.width / 2, (-this._resizeConstraint.side / 2) - 20);
+
       // Восстановление состояния канваса, которое было до вызова ctx.save
       // и последующего изменения системы координат. Нужно для того, чтобы
       // следующий кадр рисовался с привычной системой координат, где точка
