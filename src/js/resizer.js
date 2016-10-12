@@ -123,22 +123,31 @@
       //Цвет заливки темной рамки
       this._ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
       //Отрисовка темной рамки
+      //Переменная с внешними координатами рамки
+      var extraCorners = [
+        [displX + this._container.width, displY],
+        [displX + this._container.width, displY + this._container.height],
+        [displX, displY + this._container.height],
+        [displX, displY]
+      ];
+      //Переменная с внутренними координатами рамки
+      var introCorners = [
+        [(this._resizeConstraint.side / 2), (-this._resizeConstraint.side / 2) - this._ctx.lineWidth],
+        [this._resizeConstraint.side / 2, this._resizeConstraint.side / 2],
+        [(-this._resizeConstraint.side / 2) - this._ctx.lineWidth, this._resizeConstraint.side / 2],
+        [(-this._resizeConstraint.side / 2) - this._ctx.lineWidth, (-this._resizeConstraint.side / 2) - this._ctx.lineWidth]
+      ];
+      //Отрисовка рамки
       this._ctx.beginPath();
       this._ctx.moveTo(displX, displY);
-      this._ctx.lineTo(displX + this._container.width, displY);
-      this._ctx.lineTo(displX + this._container.width, displY + this._container.height);
-      this._ctx.lineTo(displX, displY + this._container.height);
-      this._ctx.lineTo(displX, displY);
+      for (var i = 0; i < extraCorners.length; i++) {
+        this._ctx.lineTo(extraCorners[i][0], extraCorners[i][1]);
+      }
       this._ctx.moveTo((-this._resizeConstraint.side / 2) - this._ctx.lineWidth,
         (-this._resizeConstraint.side / 2) - this._ctx.lineWidth);
-      this._ctx.lineTo((this._resizeConstraint.side / 2),
-        (-this._resizeConstraint.side / 2) - this._ctx.lineWidth);
-      this._ctx.lineTo(this._resizeConstraint.side / 2,
-        this._resizeConstraint.side / 2);
-      this._ctx.lineTo((-this._resizeConstraint.side / 2) - this._ctx.lineWidth,
-        this._resizeConstraint.side / 2);
-      this._ctx.lineTo((-this._resizeConstraint.side / 2) - this._ctx.lineWidth,
-        (-this._resizeConstraint.side / 2) - this._ctx.lineWidth);
+      for (var j = 0; j < introCorners.length; j++) {
+        this._ctx.lineTo(introCorners[j][0], introCorners[j][1]);
+      }
       this._ctx.fill('evenodd');
       this._ctx.closePath();
 
