@@ -132,28 +132,29 @@
       ];
       //Переменная с внутренними координатами рамки
       var introCorners = [
-        [(this._resizeConstraint.side / 2), (-this._resizeConstraint.side / 2) - this._ctx.lineWidth],
-        [this._resizeConstraint.side / 2, this._resizeConstraint.side / 2],
-        [(-this._resizeConstraint.side / 2) - this._ctx.lineWidth, this._resizeConstraint.side / 2],
+        [(this._resizeConstraint.side / 2) - this._ctx.lineWidth / 2, (-this._resizeConstraint.side / 2) - this._ctx.lineWidth],
+        [this._resizeConstraint.side / 2 - this._ctx.lineWidth / 2, this._resizeConstraint.side / 2 - this._ctx.lineWidth / 2],
+        [(-this._resizeConstraint.side / 2) - this._ctx.lineWidth, this._resizeConstraint.side / 2 - this._ctx.lineWidth / 2],
         [(-this._resizeConstraint.side / 2) - this._ctx.lineWidth, (-this._resizeConstraint.side / 2) - this._ctx.lineWidth]
       ];
       //Отрисовка рамки
       this._ctx.beginPath();
       this._ctx.moveTo(displX, displY);
+
       for (var i = 0; i < extraCorners.length; i++) {
         this._ctx.lineTo(extraCorners[i][0], extraCorners[i][1]);
       }
+
       this._ctx.moveTo((-this._resizeConstraint.side / 2) - this._ctx.lineWidth,
         (-this._resizeConstraint.side / 2) - this._ctx.lineWidth);
-      for (var j = 0; j < introCorners.length; j++) {
-        this._ctx.lineTo(introCorners[j][0], introCorners[j][1]);
+      for (i = 0; i < introCorners.length; i++) {
+        this._ctx.lineTo(introCorners[i][0], introCorners[i][1]);
       }
+
       this._ctx.fill('evenodd');
       this._ctx.closePath();
 
-      //Цвет шрифта для размера изображения
       this._ctx.fillStyle = '#ffffff';
-      //Размер шрифта
       this._ctx.font = '20px Arial';
       //Определяем ширину текста
       var textWidth = this._ctx.measureText(this._image.naturalWidth + ' x ' + this._image.naturalHeight);
@@ -170,6 +171,7 @@
       // сложные рассчеты для координат прямоугольника, который нужно очистить.
       this._ctx.restore();
     },
+
 
     /**
      * Включение режима перемещения. Запоминается текущее положение курсора,
