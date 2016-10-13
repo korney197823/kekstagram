@@ -134,7 +134,7 @@
     },
 
     //Метод отрисовки оверлея
-    drawFrame : function() {
+    drawFrame: function() {
       //Цвет заливки темной рамки
       this._ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
       //Отрисовка темной рамки
@@ -177,7 +177,7 @@
     },
 
     //Метод отрисовки размера изображения
-    drawImageSize : function() {
+    drawImageSize: function() {
       this._ctx.fillStyle = '#ffffff';
       this._ctx.font = '20px Arial';
       //Определяем ширину текста
