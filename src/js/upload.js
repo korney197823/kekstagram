@@ -68,14 +68,14 @@
   };
 
   //Валидация формы кадрирования
-  var left = document.querySelector('#resize-x');
-  var top = document.querySelector('#resize-y');
-  var side = document.querySelector('#resize-size');
+  var resizeX = document.querySelector('#resize-x');
+  var resizeY = document.querySelector('#resize-y');
+  var resizeSize = document.querySelector('#resize-size');
   var buttonSubmit = document.querySelector('#resize-fwd');
 
-  left.addEventListener('input', resizeFormIsValid);
-  top.addEventListener('input', resizeFormIsValid);
-  side.addEventListener('input', resizeFormIsValid);
+  resizeX.addEventListener('input', resizeFormIsValid);
+  resizeY.addEventListener('input', resizeFormIsValid);
+  resizeSize.addEventListener('input', resizeFormIsValid);
 
   buttonSubmit.disabled = 'true';
   /**
@@ -83,29 +83,35 @@
    * @return {boolean}
    */
   function resizeFormIsValid() {
-    var widthSum = parseInt(left.value, 10) + parseInt(side.value, 10);
-    var heightSum = parseInt(top.value, 10) + parseInt(side.value, 10);
+    resizeY.min = 0;
+    resizeX.min = 0;
+    resizeSize.min = 0;
 
-    top.min = 0;
-    left.min = 0;
-    side.min = 0;
-
-    if (!(left.value && top.value && side.value)) {
-      buttonSubmit.disabled = 'true';
+    checkInputContent();
+    checkImageSize();
+  }
+  // Проверка формы на пустоту
+  function checkInputContent() {
+    if (!(resizeX.value && resizeY.value && resizeSize.value)) {
+      buttonSubmit.setAttribute('disabled', 'true');
       return false;
     }
+    buttonSubmit.removeAttribute('disabled');
+    return true;
+  }
+  //проверка ограничения на ввод размера изображения
+  function checkImageSize() {
+    var widthSum = parseInt(resizeX.value, 10) + parseInt(resizeSize.value, 10);
+    var heightSum = parseInt(resizeY.value, 10) + parseInt(resizeSize.value, 10);
 
     if (widthSum > currentResizer._image.naturalWidth || heightSum > currentResizer._image.naturalHeight) {
-      buttonSubmit.disabled = 'true';
+      buttonSubmit.setAttribute('disabled', 'true');
       return false;
     }
 
     buttonSubmit.removeAttribute('disabled');
     return true;
   }
-
-
-
   /**
    * Форма загрузки изображения.
    * @type {HTMLFormElement}
