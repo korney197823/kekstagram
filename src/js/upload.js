@@ -87,16 +87,18 @@
     resizeX.min = 0;
     resizeSize.min = 0;
 
-    checkInputContent();
-    checkImageSize();
+    if (checkInputContent() && checkImageSize()) {
+      buttonSubmit.removeAttribute('disabled');
+    } else {
+      buttonSubmit.setAttribute('disabled', 'true');
+    }
   }
   // Проверка формы на пустоту
   function checkInputContent() {
     if (!(resizeX.value && resizeY.value && resizeSize.value)) {
-      buttonSubmit.setAttribute('disabled', 'true');
       return false;
     }
-    buttonSubmit.removeAttribute('disabled');
+
     return true;
   }
   //проверка ограничения на ввод размера изображения
@@ -105,11 +107,9 @@
     var heightSum = parseInt(resizeY.value, 10) + parseInt(resizeSize.value, 10);
 
     if (widthSum > currentResizer._image.naturalWidth || heightSum > currentResizer._image.naturalHeight) {
-      buttonSubmit.setAttribute('disabled', 'true');
       return false;
     }
 
-    buttonSubmit.removeAttribute('disabled');
     return true;
   }
   /**
