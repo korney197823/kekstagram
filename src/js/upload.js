@@ -95,22 +95,14 @@
   }
   // Проверка формы на пустоту
   function checkInputContent() {
-    if (!(resizeX.value && resizeY.value && resizeSize.value)) {
-      return false;
-    }
-
-    return true;
+    return (resizeX.value && resizeY.value && resizeSize.value);
   }
   //проверка ограничения на ввод размера изображения
   function checkImageSize() {
-    var widthSum = parseInt(resizeX.value, 10) + parseInt(resizeSize.value, 10);
-    var heightSum = parseInt(resizeY.value, 10) + parseInt(resizeSize.value, 10);
+    var widthSum = resizeX.valueAsNumber + resizeSize.valueAsNumber;
+    var heightSum = resizeY.valueAsNumber + resizeSize.valueAsNumber;
 
-    if (widthSum > currentResizer._image.naturalWidth || heightSum > currentResizer._image.naturalHeight) {
-      return false;
-    }
-
-    return true;
+    return widthSum < currentResizer._image.naturalWidth && heightSum < currentResizer._image.naturalHeight;
   }
   /**
    * Форма загрузки изображения.
