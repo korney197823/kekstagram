@@ -67,14 +67,43 @@
     backgroundElement.style.backgroundImage = 'url(' + images[randomImageNumber] + ')';
   };
 
+  //Валидация формы кадрирования
+  var resizeX = document.querySelector('#resize-x');
+  var resizeY = document.querySelector('#resize-y');
+  var resizeSize = document.querySelector('#resize-size');
+  var buttonSubmit = document.querySelector('#resize-fwd');
+
+  resizeX.addEventListener('input', resizeFormIsValid);
+  resizeY.addEventListener('input', resizeFormIsValid);
+  resizeSize.addEventListener('input', resizeFormIsValid);
+
+  buttonSubmit.disabled = 'true';
   /**
    * Проверяет, валидны ли данные, в форме кадрирования.
    * @return {boolean}
    */
-  var resizeFormIsValid = function() {
-    return true;
-  };
+  function resizeFormIsValid() {
+    resizeY.min = 0;
+    resizeX.min = 0;
+    resizeSize.min = 0;
 
+    if (checkInputContent() && checkImageSize()) {
+      buttonSubmit.removeAttribute('disabled');
+    } else {
+      buttonSubmit.setAttribute('disabled', 'true');
+    }
+  }
+  // Проверка формы на пустоту
+  function checkInputContent() {
+    return resizeX.value && resizeY.value && resizeSize.value;
+  }
+  //проверка ограничения на ввод размера изображения
+  function checkImageSize() {
+    var widthSum = resizeX.valueAsNumber + resizeSize.valueAsNumber;
+    var heightSum = resizeY.valueAsNumber + resizeSize.valueAsNumber;
+
+    return widthSum < currentResizer._image.naturalWidth && heightSum < currentResizer._image.naturalHeight;
+  }
   /**
    * Форма загрузки изображения.
    * @type {HTMLFormElement}
