@@ -95,7 +95,7 @@
   }
   // Проверка формы на пустоту
   function checkInputContent() {
-    return (resizeX.value && resizeY.value && resizeSize.value);
+    return resizeX.value && resizeY.value && resizeSize.value;
   }
   //проверка ограничения на ввод размера изображения
   function checkImageSize() {
