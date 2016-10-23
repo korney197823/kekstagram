@@ -33,13 +33,20 @@
   /**
    * @type {Object.<string, string>}
    */
-  var filterMap;
+  var filterMap = {
+    'none': 'filter-none',
+    'chrome': 'filter-chrome',
+    'sepia': 'filter-sepia',
+    'marvin': 'filter-marvin'
+  };
 
   /**
    * Объект, который занимается кадрированием изображения.
    * @type {Resizer}
    */
   var currentResizer;
+
+  var selectedFilter = 'none';
 
   /**
    * Удаляет текущий объект {@link Resizer}, чтобы создать новый с другим
@@ -92,6 +99,7 @@
     } else {
       buttonSubmit.setAttribute('disabled', 'true');
     }
+    return checkInputContent() && checkImageSize();
   }
   // Проверка формы на пустоту
   function checkInputContent() {
@@ -234,6 +242,14 @@
 
       resizeForm.classList.add('invisible');
       filterForm.classList.remove('invisible');
+
+      selectedFilter = Cookies.get('upload-filter');
+
+      if(!filterCookie) {
+        selectedFilter = 'none';
+      }
+
+      filterImage.className = 'filter-image-preview' + filterMap[selectedFilter];
     }
   };
 
@@ -253,8 +269,20 @@
    * записав сохраненный фильтр в cookie.
    * @param {Event} evt
    */
+  var filterCookie;
+
   filterForm.onsubmit = function(evt) {
     evt.preventDefault();
+
+    var now = new Date();
+    var birthDay = new Date(now.getFullYear(), 11, 9);
+    var dateDifficult = now - birthDay;
+
+    if (dateDifficult < 0) {
+      birthDay = new Date(now.getFullYear() - 1, 11, 9);
+    }
+
+    filterCookie = Cookies.set('upload-filter', selectedFilter, { expires: ((now - birthDay) / (24 * 60 *60 * 1000)) });
 
     cleanupResizer();
     updateBackground();
@@ -268,19 +296,19 @@
    * выбранному значению в форме.
    */
   filterForm.onchange = function() {
-    if (!filterMap) {
-      // Ленивая инициализация. Объект не создается до тех пор, пока
-      // не понадобится прочитать его в первый раз, а после этого запоминается
-      // навсегда.
-      filterMap = {
-        'none': 'filter-none',
-        'chrome': 'filter-chrome',
-        'sepia': 'filter-sepia',
-        'marvin': 'filter-marvin'
-      };
-    }
+    //if (!filterMap) {
+    //  // Ленивая инициализация. Объект не создается до тех пор, пока
+    //  // не понадобится прочитать его в первый раз, а после этого запоминается
+    //  // навсегда.
+    //  filterMap = {
+    //    'none': 'filter-none',
+    //    'chrome': 'filter-chrome',
+    //    'sepia': 'filter-sepia',
+    //    'marvin': 'filter-marvin'
+    //  };
+    //}
 
-    var selectedFilter = [].filter.call(filterForm['upload-filter'], function(item) {
+    selectedFilter = [].filter.call(filterForm['upload-filter'], function(item) {
       return item.checked;
     })[0].value;
 
