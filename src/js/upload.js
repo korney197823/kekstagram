@@ -243,7 +243,7 @@
       resizeForm.classList.add('invisible');
       filterForm.classList.remove('invisible');
 
-      selectedFilter = Cookies.get('upload-filter');
+      selectedFilter = window.Cookies.get('upload-filter');
 
       if(!filterCookie) {
         selectedFilter = 'none';
@@ -282,7 +282,7 @@
       birthDay = new Date(now.getFullYear() - 1, 11, 9);
     }
 
-    filterCookie = Cookies.set('upload-filter', selectedFilter, { expires: ((now - birthDay) / (24 * 60 *60 * 1000)) });
+    filterCookie = window.Cookies.set('upload-filter', selectedFilter, { expires: ((now - birthDay) / (24 * 60 * 60 * 1000)) });
 
     cleanupResizer();
     updateBackground();
