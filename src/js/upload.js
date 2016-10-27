@@ -279,8 +279,7 @@
    * Обработчик изменения фильтра. Добавляет класс из filterMap соответствующий
    * выбранному значению в форме.
    */
-  filterForm.onchange = function() {
-
+  var setExpiresCookies = function () {
     var now = new Date();
     var birthDay = new Date(now.getFullYear(), 11, 9);
     var dateDifficult = now - birthDay;
@@ -288,8 +287,11 @@
     if (dateDifficult < 0) {
       birthDay = new Date(now.getFullYear() - 1, 11, 9);
     }
+    return Math.floor((now - birthDay) / (24 * 60 * 60 * 1000));
+  };
 
-
+  console.log(setExpiresCookies());
+  filterForm.onchange = function() {
 
     if (!filterMap) {
     //  // Ленивая инициализация. Объект не создается до тех пор, пока
@@ -312,7 +314,7 @@
     // состояние или просто перезаписывать.
     filterImage.className = 'filter-image-preview ' + filterMap[selectedFilter];
 
-    window.Cookies.set('upload-filter', filterMap[selectedFilter], { expires: ((now - birthDay) / (24 * 60 * 60 * 1000)) });
+    window.Cookies.set('upload-filter', filterMap[selectedFilter], { expires: 7  });
   };
 
   cleanupResizer();
