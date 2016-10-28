@@ -170,7 +170,7 @@
    * и показывается форма кадрирования.
    * @param {Event} evt
    */
-  uploadForm.onchange = function(evt) {
+  uploadForm.addEventListener('change', function(evt) {
     var element = evt.target;
     if (element.id === 'upload-file') {
       // Проверка типа загружаемого файла, тип должен быть изображением
@@ -180,7 +180,7 @@
 
         showMessage(Action.UPLOADING);
 
-        fileReader.onload = function() {
+        fileReader.addEventListener('load', function() {
           cleanupResizer();
 
           currentResizer = new Resizer(fileReader.result);
@@ -191,7 +191,7 @@
           resizeForm.classList.remove('invisible');
 
           hideMessage();
-        };
+        });
 
         fileReader.readAsDataURL(element.files[0]);
       } else {
@@ -199,14 +199,14 @@
         showMessage(Action.ERROR);
       }
     }
-  };
+  });
 
   /**
    * Обработка сброса формы кадрирования. Возвращает в начальное состояние
    * и обновляет фон.
    * @param {Event} evt
    */
-  resizeForm.onreset = function(evt) {
+  resizeForm.addEventListener('reset', function(evt) {
     evt.preventDefault();
 
     cleanupResizer();
@@ -214,6 +214,18 @@
 
     resizeForm.classList.add('invisible');
     uploadForm.classList.remove('invisible');
+  });
+
+  //Получение значение фильтра из Cookie и добавление фильтра по умолчанию
+
+  var getCoockieAndSetImageFilter = function() {
+    var filterPicked = window.Cookies.get('upload-filter');
+    var filterCheck = document.getElementById('upload-' + filterPicked);
+
+    if(filterPicked) {
+      filterCheck.checked = true;
+      filterImage.className = 'filter-image-preview ' + filterPicked;
+    }
   };
 
   /**
@@ -221,7 +233,7 @@
    * кропнутое изображение в форму добавления фильтра и показывает ее.
    * @param {Event} evt
    */
-  resizeForm.onsubmit = function(evt) {
+  resizeForm.addEventListener('submit', function(evt) {
     evt.preventDefault();
 
     if (resizeFormIsValid()) {
@@ -237,15 +249,9 @@
       resizeForm.classList.add('invisible');
       filterForm.classList.remove('invisible');
 
-      var filterPicked = window.Cookies.get('upload-filter');
-      var filterCheck = document.getElementById('upload-' + filterPicked);
-
-      if(filterPicked) {
-        filterCheck.checked = true;
-        filterImage.className = 'filter-image-preview ' + filterPicked;
-      }
+      getCoockieAndSetImageFilter();
     }
-  };
+  });
 
   /**
    * Сброс формы фильтра. Показывает форму кадрирования.
@@ -265,7 +271,7 @@
    * @param {Event} evt
    */
 
-  filterForm.onsubmit = function(evt) {
+  filterForm.addEventListener('submit', function(evt) {
     evt.preventDefault();
 
     cleanupResizer();
@@ -273,13 +279,15 @@
 
     filterForm.classList.add('invisible');
     uploadForm.classList.remove('invisible');
-  };
+  });
 
   /**
    * Обработчик изменения фильтра. Добавляет класс из filterMap соответствующий
    * выбранному значению в форме.
    */
-  var setExpiresCookies = function () {
+
+  // Функция вычесления срока хранения Cookie
+  var setExpiresCookies = function() {
     var now = new Date();
     var birthDay = new Date(now.getFullYear(), 11, 9);
     var dateDifficult = now - birthDay;
@@ -290,9 +298,7 @@
     return Math.floor((now - birthDay) / (24 * 60 * 60 * 1000));
   };
 
-  console.log(setExpiresCookies());
-  filterForm.onchange = function() {
-
+  filterForm.addEventListener('change', function() {
     if (!filterMap) {
     //  // Ленивая инициализация. Объект не создается до тех пор, пока
     //  // не понадобится прочитать его в первый раз, а после этого запоминается
@@ -314,8 +320,8 @@
     // состояние или просто перезаписывать.
     filterImage.className = 'filter-image-preview ' + filterMap[selectedFilter];
 
-    window.Cookies.set('upload-filter', filterMap[selectedFilter], { expires: 7  });
-  };
+    window.Cookies.set('upload-filter', filterMap[selectedFilter], { expires: setExpiresCookies() });
+  });
 
   cleanupResizer();
   updateBackground();
