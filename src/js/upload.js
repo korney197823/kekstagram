@@ -219,7 +219,7 @@
   //Получение значение фильтра из Cookie и добавление фильтра по умолчанию
 
   var getCoockieAndSetImageFilter = function() {
-    var filterPicked = Cookies.get('upload-filter');
+    var filterPicked = window.Cookies.get('upload-filter');
     var filterCheck = document.getElementById('upload-' + filterPicked);
 
     if(filterPicked) {
@@ -287,7 +287,7 @@
    */
 
   // Функция вычесления срока хранения Cookie
-  var setExpiresCookies = function() {
+  function setCookies(selectedFilter) {
     var now = new Date();
     var birthDay = new Date(now.getFullYear(), 11, 9);
     var dateDifficult = now - birthDay;
@@ -295,8 +295,10 @@
     if (dateDifficult < 0) {
       birthDay = new Date(now.getFullYear() - 1, 11, 9);
     }
-    return Math.floor((now - birthDay) / (24 * 60 * 60 * 1000));
-  };
+    var expiresDate = Math.floor((now - birthDay) / (24 * 60 * 60 * 1000));
+
+    window.Cookies.set('upload-filter', filterMap[selectedFilter], { expires: expiresDate });
+  }
 
   filterForm.addEventListener('change', function() {
     if (!filterMap) {
@@ -320,7 +322,7 @@
     // состояние или просто перезаписывать.
     filterImage.className = 'filter-image-preview ' + filterMap[selectedFilter];
 
-    Cookies.set('upload-filter', filterMap[selectedFilter], { expires: setExpiresCookies() });
+    setCookies(selectedFilter);
   });
 
   cleanupResizer();
