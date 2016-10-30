@@ -219,7 +219,7 @@
   //Получение значение фильтра из Cookie и добавление фильтра по умолчанию
 
   var getCoockieAndSetImageFilter = function() {
-    var filterPicked = window.Cookies.get('upload-filter');
+    var filterPicked = Cookies.get('upload-filter');
     var filterCheck = document.getElementById('upload-' + filterPicked);
 
     if(filterPicked) {
@@ -300,9 +300,9 @@
 
   filterForm.addEventListener('change', function() {
     if (!filterMap) {
-    //  // Ленивая инициализация. Объект не создается до тех пор, пока
-    //  // не понадобится прочитать его в первый раз, а после этого запоминается
-    //  // навсегда.
+      // Ленивая инициализация. Объект не создается до тех пор, пока
+      // не понадобится прочитать его в первый раз, а после этого запоминается
+      // навсегда.
       filterMap = {
         'none': 'filter-none',
         'chrome': 'filter-chrome',
@@ -320,7 +320,7 @@
     // состояние или просто перезаписывать.
     filterImage.className = 'filter-image-preview ' + filterMap[selectedFilter];
 
-    window.Cookies.set('upload-filter', filterMap[selectedFilter], { expires: setExpiresCookies() });
+    Cookies.set('upload-filter', filterMap[selectedFilter], { expires: setExpiresCookies() });
   });
 
   cleanupResizer();
