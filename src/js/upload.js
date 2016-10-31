@@ -219,18 +219,6 @@
     uploadForm.classList.remove('invisible');
   });
 
-  //Получение значение фильтра из Cookie и добавление фильтра по умолчанию
-
-  var getCoockieAndSetImageFilter = function() {
-    var filterPicked = window.Cookies.get('upload-filter');
-    var filterCheck = document.getElementById('upload-' + filterPicked);
-
-    if(filterPicked) {
-      filterCheck.checked = true;
-      filterImage.className = 'filter-image-preview ' + filterPicked;
-    }
-  };
-
   /**
    * Обработка отправки формы кадрирования. Если форма валидна, экспортирует
    * кропнутое изображение в форму добавления фильтра и показывает ее.
@@ -255,6 +243,18 @@
       getCoockieAndSetImageFilter();
     }
   });
+
+  //Получение значение фильтра из Cookie и добавление фильтра по умолчанию
+
+  function getCoockieAndSetImageFilter() {
+    var filterPicked = window.Cookies.get('upload-filter');
+    var filterCheck = document.getElementById('upload-' + filterPicked);
+
+    if(filterPicked) {
+      filterCheck.checked = true;
+      filterImage.className = 'filter-image-preview ' + filterPicked;
+    }
+  }
 
   /**
    * Сброс формы фильтра. Показывает форму кадрирования.
