@@ -285,8 +285,19 @@
    * Обработчик изменения фильтра. Добавляет класс из filterMap соответствующий
    * выбранному значению в форме.
    */
+  filterForm.addEventListener('change', setSelectFilterAndCookies);
 
-  filterForm.addEventListener('change', function() {
+  // Функция установки фильтра по умолчанию и вычесления срока хранения и сохранения его в Cookie
+  function setSelectFilterAndCookies() {
+    var now = new Date();
+    var birthDay = new Date(now.getFullYear(), 11, 9);
+    var dateDifficult = now - birthDay;
+
+    if (dateDifficult < 0) {
+      birthDay = new Date(now.getFullYear() - 1, 11, 9);
+    }
+    var expiresDate = Math.floor((now - birthDay) / (24 * 60 * 60 * 1000));
+
     if (!filterMap) {
       // Ленивая инициализация. Объект не создается до тех пор, пока
       // не понадобится прочитать его в первый раз, а после этого запоминается
@@ -307,20 +318,6 @@
     // убрать предыдущий примененный класс. Для этого нужно или запоминать его
     // состояние или просто перезаписывать.
     filterImage.className = 'filter-image-preview ' + filterMap[selectedFilter];
-
-    setCookies(selectedFilter);
-  });
-
-  // Функция вычесления срока хранения и сохранения Cookie
-  function setCookies(selectedFilter) {
-    var now = new Date();
-    var birthDay = new Date(now.getFullYear(), 11, 9);
-    var dateDifficult = now - birthDay;
-
-    if (dateDifficult < 0) {
-      birthDay = new Date(now.getFullYear() - 1, 11, 9);
-    }
-    var expiresDate = Math.floor((now - birthDay) / (24 * 60 * 60 * 1000));
 
     window.Cookies.set('upload-filter', filterMap[selectedFilter], { expires: expiresDate });
   }
