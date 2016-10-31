@@ -257,13 +257,12 @@
    * Сброс формы фильтра. Показывает форму кадрирования.
    *
    */
+  filterForm.addEventListener('reset', resetVisibleForms);
 
   function resetVisibleForms() {
     filterForm.classList.add('invisible');
     resizeForm.classList.remove('invisible');
   }
-
-  filterForm.addEventListener('reset', resetVisibleForms);
 
   /**
    * Отправка формы фильтра. Возвращает в начальное состояние, предварительно
