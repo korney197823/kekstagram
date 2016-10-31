@@ -258,14 +258,12 @@
    *
    */
 
-
-
-  filterForm.addEventListener('reset', resetVisibleForms);
-
   function resetVisibleForms() {
     filterForm.classList.add('invisible');
     resizeForm.classList.remove('invisible');
   }
+
+  filterForm.addEventListener('reset', resetVisibleForms);
 
   /**
    * Отправка формы фильтра. Возвращает в начальное состояние, предварительно
@@ -287,20 +285,6 @@
    * Обработчик изменения фильтра. Добавляет класс из filterMap соответствующий
    * выбранному значению в форме.
    */
-
-  // Функция вычесления срока хранения Cookie
-  function setCookies(selectedFilter) {
-    var now = new Date();
-    var birthDay = new Date(now.getFullYear(), 11, 9);
-    var dateDifficult = now - birthDay;
-
-    if (dateDifficult < 0) {
-      birthDay = new Date(now.getFullYear() - 1, 11, 9);
-    }
-    var expiresDate = Math.floor((now - birthDay) / (24 * 60 * 60 * 1000));
-
-    window.Cookies.set('upload-filter', filterMap[selectedFilter], { expires: expiresDate });
-  }
 
   filterForm.addEventListener('change', function() {
     if (!filterMap) {
@@ -326,6 +310,20 @@
 
     setCookies(selectedFilter);
   });
+
+  // Функция вычесления срока хранения и сохранения Cookie
+  function setCookies(selectedFilter) {
+    var now = new Date();
+    var birthDay = new Date(now.getFullYear(), 11, 9);
+    var dateDifficult = now - birthDay;
+
+    if (dateDifficult < 0) {
+      birthDay = new Date(now.getFullYear() - 1, 11, 9);
+    }
+    var expiresDate = Math.floor((now - birthDay) / (24 * 60 * 60 * 1000));
+
+    window.Cookies.set('upload-filter', filterMap[selectedFilter], { expires: expiresDate });
+  }
 
   cleanupResizer();
   updateBackground();
