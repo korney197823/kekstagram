@@ -170,7 +170,10 @@
    * и показывается форма кадрирования.
    * @param {Event} evt
    */
-  uploadForm.addEventListener('change', function(evt) {
+
+  uploadForm.addEventListener('change', addResizerInForm);
+
+  function addResizerInForm(evt) {
     var element = evt.target;
     if (element.id === 'upload-file') {
       // Проверка типа загружаемого файла, тип должен быть изображением
@@ -199,7 +202,7 @@
         showMessage(Action.ERROR);
       }
     }
-  });
+  }
 
   /**
    * Обработка сброса формы кадрирования. Возвращает в начальное состояние
