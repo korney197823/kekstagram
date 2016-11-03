@@ -116,9 +116,14 @@
 
   hiddenFilters();
   renderPictures(pictures);
+  showFilters();
 
   function hiddenFilters() {
     filters.classList.add('hidden');
+  }
+
+  function showFilters() {
+    filters.classList.remove('hidden');
   }
 
   /**
