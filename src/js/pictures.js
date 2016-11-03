@@ -109,12 +109,15 @@
     'preview': 'photos/26.jpg'
   }];
 
+  var filters = document.querySelector('.filters');
   var container = document.querySelector('.pictures');
   var template = document.querySelector('template');
   var templateContainer = 'content' in template ? template.content : template;
 
+  hiddenFilters();
+  renderPictures(pictures);
+
   function hiddenFilters() {
-    var filters = document.querySelector('.filters');
     filters.classList.add('hidden');
   }
 
@@ -122,17 +125,17 @@
    * Создаем функцию которая отрисовывает список фотографий
    * @param pictures
    */
-  var renderPictures = function(pictures) {
+  function renderPictures(pictures) {
     pictures.forEach(function(picture) {
       container.appendChild(getPictureElement(picture));
     });
-  };
+  }
 
   /**
    * Создадим функцию, которая будет создавать DOM-элемент фотографии на основе переданных данных и возвращать его.
    * @param picture
    */
-  var getPictureElement = function(picture) {
+  function getPictureElement(picture) {
     var pictureElement = templateContainer.querySelector('.picture').cloneNode(true);
     pictureElement.querySelector('.picture-comments').textContent = picture.comments;
     pictureElement.querySelector('.picture-likes').textContent = picture.likes;
@@ -149,14 +152,6 @@
     pictureImage.src = picture.url;
 
     return pictureElement;
-  };
-
-  hiddenFilters();
-  renderPictures(pictures);
-
-
-
-
-
+  }
 
 })();
