@@ -128,10 +128,10 @@
 
   /**
    * Создаем функцию которая отрисовывает список фотографий
-   * @param pictures
+   * @param picturesArray
    */
-  function renderPictures(pictures) {
-    pictures.forEach(function(picture) {
+  function renderPictures(picturesArray) {
+    picturesArray.forEach(function(picture) {
       var pictureItem = getPictureElement(picture);
       container.appendChild(pictureItem);
     });
