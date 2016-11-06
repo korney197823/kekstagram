@@ -7,7 +7,7 @@
 
 'use strict';
 
-(function() {
+module.exports = (function() {
   /** @enum {string} */
   var FileType = {
     'GIF': '',
@@ -326,4 +326,4 @@
 
   cleanupResizer();
   updateBackground();
-})();
+});
