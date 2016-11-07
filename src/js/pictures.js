@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = (function() {
+(function() {
 
   var loadPictures = require('./load');
   var getPictureElement = require('./review');
@@ -32,4 +32,4 @@ module.exports = (function() {
     });
   }
 
-});
+})();

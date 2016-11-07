@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function loadPictures(url, callback, callbackName) {
+function loadPictures(url, callback, callbackName) {
   if(!callbackName) {
     callbackName = 'cb' + Date.now();
   }
@@ -10,5 +10,9 @@ module.exports = function loadPictures(url, callback, callbackName) {
   var script = document.createElement('script');
   script.src = url + '?callback=' + callbackName;
   document.body.appendChild(script);
-};
+}
+
+module.exports = loadPictures;
+
+
 

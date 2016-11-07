@@ -4,7 +4,7 @@
  * Создадим функцию, которая будет создавать DOM-элемент фотографии на основе переданных данных и возвращать его.
  * @param picture
  */
-module.exports = function getPictureElement(picture) {
+function getPictureElement(picture) {
 
   var template = document.querySelector('template');
   var templateContainer = 'content' in template ? template.content : template;
@@ -31,4 +31,6 @@ module.exports = function getPictureElement(picture) {
   pictureImage.src = picture.url;
 
   return clonePictureElement;
-};
+}
+
+module.exports = getPictureElement;
