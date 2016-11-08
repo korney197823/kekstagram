@@ -1,9 +1,7 @@
 'use strict';
 
-var resizer = require('./resizer');
-var pictures = require('./pictures');
-var upload = require('./upload');
+require('./pictures');
+require('./upload');
+require('./resizer');
 
-pictures();
-resizer();
-upload();
+
