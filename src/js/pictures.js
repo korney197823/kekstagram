@@ -2,6 +2,7 @@
 
 var loadPictures = require('./load');
 var getPictureElement = require('./review');
+var gallery = require('./gallery');
 
 var filters = document.querySelector('.filters');
 var container = document.querySelector('.pictures');
@@ -24,8 +25,10 @@ function showFilters() {
  * @param picturesArray
  */
 function renderPictures(picturesArray) {
-  picturesArray.forEach(function(picture) {
-    var pictureItem = getPictureElement(picture);
+  picturesArray.forEach(function(picture, index) {
+    var pictureItem = getPictureElement(picture, index);
     container.appendChild(pictureItem);
   });
+  gallery.setPictures(picturesArray);
 }
+
