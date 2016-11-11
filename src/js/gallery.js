@@ -3,13 +3,12 @@
 function Gallery() {
   this.pictures = [];
   this.activePicture = null;
-  this.galleryOverlay = document.querySelector('.gallery-overlay');
-  this.galleryOverlayClose = this.galleryOverlay.querySelector('.gallery-overlay-close');
-  this.galleryOverlayImage = this.galleryOverlay.querySelector('.gallery-overlay-image');
-  this.galleryLikes = this.galleryOverlay.querySelector('.likes-count');
-  this.galleryComments = this.galleryOverlay.querySelector('.comments-count');
+  this.overlayElement = document.querySelector('.gallery-overlay');
+  this.overlayClose = this.overlayElement.querySelector('.gallery-overlay-close');
+  this.overlayImage = this.overlayElement.querySelector('.gallery-overlay-image');
+  this.overlayLikes = this.overlayElement.querySelector('.likes-count');
+  this.overlayComments = this.overlayElement.querySelector('.comments-count');
 }
-
 Gallery.prototype.setPictures = function(pictures) {
   this.pictures = pictures;
 };
@@ -17,30 +16,33 @@ Gallery.prototype.setPictures = function(pictures) {
 Gallery.prototype.show = function(number) {
   var self = this;
 
-  this.galleryOverlayClose.addEventListener('click', function() {
+  this.overlayClose.onclick = function() {
     self.hide();
-  });
+  };
 
-  this.galleryOverlayImage.addEventListener('click', function() {
-    if (number === self.pictures.length - 1) {
-      number = -1;
+  this.overlayImage.onclick = function() {
+    if (self.activePicture === self.pictures.length - 1) {
+      self.setActivePictures(0);
+    } else {
+      self.setActivePictures(self.activePicture + 1);
     }
-    self.setActivePictures(++number);
-  });
+  };
 
-  this.galleryOverlay.classList.remove('invisible');
+  this.overlayElement.classList.remove('invisible');
   this.setActivePictures(number);
 };
 
 Gallery.prototype.hide = function() {
-  this.galleryOverlay.classList.add('invisible');
+  this.overlayElement.classList.add('invisible');
+  this.overlayImage.onclick = null;
+  this.overlayClose.onclick = null;
 };
 
-Gallery.prototype.setActivePictures = function(activePicture) {
-  var picture = this.pictures[activePicture];
-  this.galleryOverlayImage.src = picture.url;
-  this.galleryLikes.textContent = picture.likes;
-  this.galleryComments.textContent = picture.comments;
+Gallery.prototype.setActivePictures = function(number) {
+  this.activePicture = number;
+  this.overlayImage.src = this.pictures[this.activePicture].url;
+  this.overlayLikes.textContent = this.pictures[this.activePicture].likes;
+  this.overlayComments.textContent = this.pictures[this.activePicture].comments;
 };
 
 module.exports = new Gallery();
